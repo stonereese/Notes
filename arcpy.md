@@ -233,3 +233,7 @@ import xlwings,报错不能import win32api(在shell中测试)
 2. 尝试pip install pywin32,之后在scripts目录下,pywin32_postinstall.py -install,尝试重启shell
 3. pip install pypiwin32,重启shell
 3. 
+
+## 7. os.chdir()
+在python2中，可以直接使用`os.chdir(r"d:\桌面")`来修改当前工作目录，但是如果该路径是个变量，比如`mypath=r"d:\桌面"`,或者是`mypath=raw_input("输入一个路径:\n")`,此时如果使用`os.chdir(mypath)`就会报错(python3无此问题),解决方法是`os.chdir(unicode(mypath,'utf8')`即可,此处的编码若为gbk,也报错.查资料unicode和str互转提到,unicode转str,使用`unicodestring.encode("utf-8")`,此处是encode,str转unicode是decode,写作`unicode(utf8string, "utf-8")`
+    

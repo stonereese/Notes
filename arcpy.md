@@ -236,4 +236,19 @@ import xlwings,报错不能import win32api(在shell中测试)
 
 ## 7. os.chdir()
 在python2中，可以直接使用`os.chdir(r"d:\桌面")`来修改当前工作目录，但是如果该路径是个变量，比如`mypath=r"d:\桌面"`,或者是`mypath=raw_input("输入一个路径:\n")`,此时如果使用`os.chdir(mypath)`就会报错(python3无此问题),解决方法是`os.chdir(unicode(mypath,'utf8')`即可,此处的编码若为gbk,也报错.查资料unicode和str互转提到,unicode转str,使用`unicodestring.encode("utf-8")`,此处是encode,str转unicode是decode,写作`unicode(utf8string, "utf-8")`
-    
+
+update:**py2中放弃使用chdir**,还是用os.path.join吧.因为使用上述方法设置工作目录后,如果需要用到中文目录比如`path=".\中文"`,使用os.path.exists(path),是False,此处的path也必须unicode(path,"utf8"),可能是因为标识当前目录的`.`是unicode类型的缘故.
+## 8. Counter,列表中最多的值
+这个collections 应该是自带的包,py2和py3中都有
+```python
+# coding:utf-8
+from collections import Counter
+list = ['a', 'ab', 'cbv', 'ab', '9', 56, 56, 7, 'ab']
+# 分别打印a,b,e,c,d,结果显示在'#'号之后
+a = Counter(list) # Counter({'ab': 3, 56: 2, 'a': 1, 'cbv': 1, '9': 1, 7: 1})
+b = Counter(list).most_common(1) # [('ab', 3)]
+e = Counter(list).most_common(1) # [('ab', 3), (56, 2)]
+c = Counter(list).most_common(1)[0] # ('ab', 3)
+d = Counter(list).most_common(1)[0][0] # ab
+```
+
